@@ -1,0 +1,16 @@
+html {
+  scroll-behavior: smooth;
+}
+
+form {
+  @apply space-x-2 mt-2;
+}
+
+.anchor,
+button[type='button'] {
+  @apply text-sky-300 underline;
+}
+
+.anchor-dark {
+  @apply text-gray-300 underline;
+}

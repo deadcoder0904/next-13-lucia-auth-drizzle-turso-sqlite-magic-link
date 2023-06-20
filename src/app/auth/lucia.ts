@@ -8,7 +8,7 @@ import { tableNames } from '@/app/db/schema'
 export const IS_DEV = process.env['NODE_ENV'] === 'development' ? 'DEV' : 'PROD'
 
 export const auth = lucia({
-  adapter: betterSqlite3(db as any, tableNames),
+  adapter: betterSqlite3(db, tableNames),
   env: IS_DEV,
   middleware: nextjs(),
   getUserAttributes: (user: any) => {

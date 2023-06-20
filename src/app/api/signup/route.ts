@@ -22,7 +22,10 @@ export const POST = async (request: Request) => {
     }
   }
 
+  console.log('2nd try..catch')
+
   try {
+    console.log('user')
     const user = await auth.createUser({
       key: {
         providerId: 'email',

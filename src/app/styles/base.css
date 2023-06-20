@@ -6,8 +6,12 @@ form {
   @apply space-x-2 mt-2;
 }
 
+input[type='email'] {
+  @apply text-black px-2 w-64;
+}
+
 .anchor,
-button[type='button'] {
+button[type='submit'] {
   @apply text-sky-300 underline;
 }
 

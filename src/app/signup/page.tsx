@@ -3,21 +3,28 @@
 import ky from 'ky'
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import toast, { Toaster } from 'react-hot-toast'
 
 export const Signup = () => {
+  const router = useRouter()
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const email = formData.get('email')
 
     console.log({ email })
-    const { success }: { success: string } = await ky
-      .post('/api/signup', {
+    const response: { redirected: boolean; url: string } = await ky.post(
+      '/api/signup',
+      {
         json: { email },
-      })
-      .json()
+      }
+    )
 
-    if (success) {
-      alert('signup successful!')
+    if (response.redirected) {
+      toast.success('signup successful!')
+      return router.push(response.url)
     }
   }
 
@@ -30,6 +37,7 @@ export const Signup = () => {
         <input type="email" name="email" id="email" />
         <button type="submit">signup</button>
       </form>
+      <Toaster />
     </>
   )
 }

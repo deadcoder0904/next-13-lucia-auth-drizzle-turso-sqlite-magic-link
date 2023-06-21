@@ -1,14 +1,14 @@
 import { lucia } from 'lucia'
 import { nextjs } from 'lucia/middleware'
-import { betterSqlite3 } from '@lucia-auth/adapter-sqlite'
+import { libsql } from 'lucia-libsql-adapter'
 
-import { db } from '@/app/db/index'
+import { client } from '@/app/db/index'
 import { tableNames } from '@/app/db/schema'
 
 export const IS_DEV = process.env['NODE_ENV'] === 'development' ? 'DEV' : 'PROD'
 
 export const auth = lucia({
-  adapter: betterSqlite3(db, tableNames),
+  adapter: libsql(client, tableNames),
   env: IS_DEV,
   middleware: nextjs(),
   getUserAttributes: (user: any) => {

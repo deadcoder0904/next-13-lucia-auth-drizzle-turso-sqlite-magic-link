@@ -47,6 +47,9 @@ dependencies:
   lucia:
     specifier: 2.0.0-beta.1
     version: 2.0.0-beta.1
+  lucia-libsql-adapter:
+    specifier: 0.1.4-beta.3
+    version: 0.1.4-beta.3(@libsql/client@0.2.1)(lucia@2.0.0-beta.1)
   next:
     specifier: 13.4.6
     version: 13.4.6(react-dom@18.2.0)(react@18.2.0)
@@ -59,6 +62,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-hot-toast:
+    specifier: ^2.4.1
+    version: 2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
@@ -2099,6 +2105,14 @@ packages:
       slash: 4.0.0
     dev: false
 
+  /goober@2.1.13(csstype@3.1.2):
+    resolution: {integrity: sha512-jFj3BQeleOoy7t93E9rZ2de+ScC4lQICLwiAQmKMg9F6roKGaLSHoCDYKkWlSafg138jejvq/mTdvmnwDQgqoQ==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dependencies:
+      csstype: 3.1.2
+    dev: false
+
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
@@ -2524,6 +2538,16 @@ packages:
     dependencies:
       es5-ext: 0.10.62
     dev: true
+
+  /lucia-libsql-adapter@0.1.4-beta.3(@libsql/client@0.2.1)(lucia@2.0.0-beta.1):
+    resolution: {integrity: sha512-kmd01xxAuRIRn+4T7fi6z6+DtE0ReXm0TLqkwvrQu1Ehy6A5ig7WdO7yptCy4KM7E5RN/h1Xbmv1NhPXblC6ug==}
+    peerDependencies:
+      '@libsql/client': ^0.2.1
+      lucia: ^2.0.0-beta.1
+    dependencies:
+      '@libsql/client': 0.2.1
+      lucia: 2.0.0-beta.1
+    dev: false
 
   /lucia@2.0.0-beta.1:
     resolution: {integrity: sha512-hhp4K5g05aNVlf6KmJDkerdCLTgrO/5bjER2uqUNoOzifHr9x+HeR1xNwB6se4S3l1Ohn1ZsEbbhjBMNFWPeJA==}
@@ -3080,6 +3104,20 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-hot-toast@2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-j8z+cQbWIM5LY37pR6uZR6D4LfseplqnuAO4co4u8917hBUvXlEqyP1ZzqVLcqoyUesZZv/ImreoCeHVDpE5pQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      goober: 2.1.13(csstype@3.1.2)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - csstype
     dev: false
 
   /react-is@16.13.1:

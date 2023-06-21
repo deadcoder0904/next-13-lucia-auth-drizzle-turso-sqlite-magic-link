@@ -25,13 +25,13 @@ turso auth login
 2. Create a new Turso database:
 
 ```bash
-turso db create drizzle-demo
+turso db create magic-link
 ```
 
 3. Create an auth token to get access to your database using libSQL. Copy the auth token to Clipboard.
 
 ```bash
-turso db tokens create drizzle-demo
+turso db tokens create magic-link
 ```
 
 # Store Environment Variables
@@ -51,7 +51,7 @@ TURSO_AUTH_TOKEN=[paste-the-generated-auth-token-without-brackets]
 3. Run this command to get the database URL:
 
 ```
-turso db show drizzle-example --url
+turso db show magic-link --url
 ```
 
 4. Paste the generated url above in `.env` file next to `TURSO_URL`:

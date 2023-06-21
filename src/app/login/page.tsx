@@ -3,19 +3,24 @@
 import ky from 'ky'
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
+  const router = useRouter()
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const email = formData.get('email')
-    const { success }: { success: string } = await ky
-      .post('/api/login', {
+    const response: { redirected: boolean; url: string } = await ky.post(
+      '/api/login',
+      {
         json: { email },
-      })
-      .json()
+      }
+    )
 
-    if (success) {
-      alert('login successful!')
+    if (response.redirected) {
+      return router.push(response.url)
     }
   }
 

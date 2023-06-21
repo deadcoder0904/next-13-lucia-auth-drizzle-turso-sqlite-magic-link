@@ -6,7 +6,7 @@ import { auth } from '@/app/auth/lucia'
 
 export const POST = async (request: Request) => {
   const req = await request.json()
-  console.log('fetch /api/signup/route')
+  console.log('🏁 /api/signup/route')
 
   const schema = vine.object({
     email: vine.string(),
@@ -22,10 +22,7 @@ export const POST = async (request: Request) => {
     }
   }
 
-  console.log('2nd try..catch')
-
   try {
-    console.log('user')
     const user = await auth.createUser({
       key: {
         providerId: 'email',
@@ -46,13 +43,13 @@ export const POST = async (request: Request) => {
     return new Response(null, {
       status: 302,
       headers: {
-        location: '/dashboard',
+        location: '/login',
       },
     })
   } catch (error) {
-    console.error({ error })
+    console.error(error)
     // email taken
-    return NextResponse.json(null, {
+    return NextResponse.json(error, {
       status: 400,
     })
   }

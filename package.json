@@ -9,7 +9,12 @@
     "lint": "next lint",
     "db:push": "drizzle-kit push:sqlite --config drizzle.config.ts",
     "db:generate": "drizzle-kit generate:sqlite --config drizzle.config.ts",
-    "clean": "rimraf .next"
+    "clean": "rimraf .next",
+    "turso:create": "turso db create magic-link",
+    "turso:delete": "turso db destroy magic-link",
+    "turso:url": "turso db show magic-link --url",
+    "turso:token": "turso db tokens create magic-link",
+    "turso:shell": "turso db shell magic-link"
   },
   "dependencies": {
     "@libsql/client": "^0.2.1",
@@ -26,10 +31,12 @@
     "eslint-config-next": "13.4.6",
     "ky": "^0.33.3",
     "lucia": "2.0.0-beta.1",
+    "lucia-libsql-adapter": "0.1.4-beta.3",
     "next": "13.4.6",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.1",
     "tailwindcss": "3.3.2",
     "typescript": "5.1.3"
   },

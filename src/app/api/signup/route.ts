@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { redirect } from 'next/navigation'
 import vine, { errors } from '@vinejs/vine'
 
 import { auth } from '@/app/auth/lucia'
@@ -43,6 +44,7 @@ export const POST = async (request: Request) => {
 
     console.log({ session })
     // using redirect() ignores cookie
+
     return new Response(null, {
       status: 302,
       headers: {

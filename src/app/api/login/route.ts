@@ -1,11 +1,13 @@
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { and, eq } from 'drizzle-orm'
 import vine, { errors } from '@vinejs/vine'
 
-import { auth } from '@/app/auth/lucia'
 import { users } from '@/app/db/schema'
 import { db } from '@/app/db/index'
+import { MagicLinkEmail } from '@/components/resend/MagicLink'
+import { resend } from '@/lib/resend'
+import { generateVerificationToken } from '@/lib/verification-token'
+import { EMAIL_VERIFICATION_URL } from '@/lib/constants'
 
 export const POST = async (request: Request) => {
   const req = await request.json()
@@ -31,37 +33,30 @@ export const POST = async (request: Request) => {
       .where(and(eq(users.email, req.email)))
       .all()
 
-    console.log({ user })
-
     if (!user.length) {
       return NextResponse.json({ success: false })
     }
 
-    // if email does not exist, then return with an error msg asking to buy the product or signing up with the email
-    // if email exists in the database, then
-    const key = await auth.useKey('email', req.email, null)
-    const session = await auth.createSession(key.userId)
-    const authRequest = auth.handleRequest({ request, cookies })
-    authRequest.setSession(session)
-    // using redirect() ignores cookie
+    const magicLink = await generateVerificationToken(user[0].id)
 
-    // resend.emails.send({
-    //   from: 'onboarding@resend.dev',
-    //   to: 'akshaykadam0904@gmail.com',
-    //   subject: 'Hello World',
-    //   react: EmailTemplate({ firstName: "John" }),
-    // })
-    console.log({ key, session })
-    // return NextResponse.json({ success: true, url: '/dashboard' })
-    return new Response(null, {
-      status: 302,
-      headers: {
-        location: '/dashboard',
-      },
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: user[0].email,
+      subject: 'Magic Link',
+      react: MagicLinkEmail({ magicLink }),
+    })
+
+    console.log({
+      magicLink: `${EMAIL_VERIFICATION_URL}/${magicLink}`,
+    })
+
+    return NextResponse.json(null, {
+      status: 200,
+      statusText: 'check your email for magic link!!!',
     })
   } catch (error) {
     console.error({ error })
-    // email taken
+
     return NextResponse.json(null, {
       status: 400,
     })

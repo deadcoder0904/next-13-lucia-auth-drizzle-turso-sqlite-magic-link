@@ -7,5 +7,3 @@ export const client = createClient({
 })
 
 export const db = drizzle(client)
-
-// const result = db.select().from(users).all()

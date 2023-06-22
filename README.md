@@ -83,3 +83,18 @@ pnpm db:push
 ```bash
 pnpm db:generate
 ```
+
+### Flow
+
+1. `/api/signup` -> if email already exists, return 400 error. if not, then send magic link via email & redirect to `/verify-email` page with further instructions
+
+2. `/api/login` -> if email doesn't exist in the database, return 400 error. if not, then send magic link via email & redirect to `/verify-email` page with further instructions
+
+3. `/api/verify-email` -> if magic link is clicked inside email, then verify email on `/api/verify-email`. finally, create lucia session & redirect to `/dashboard`
+
+4. `/api/logout` -> if logout button is clicked, then invalidate all sessions & redirect to `/login`
+
+5. redirect from `/`, `/login`, `/signup`, `/check-email` to `/dashboard` if session exists.
+
+6. redirect from `/dashboard` to `/login` if session doesn't exist.
+

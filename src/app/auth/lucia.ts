@@ -4,8 +4,7 @@ import { libsql } from 'lucia-libsql-adapter'
 
 import { client } from '@/app/db/index'
 import { tableNames } from '@/app/db/schema'
-
-export const IS_DEV = process.env['NODE_ENV'] === 'development' ? 'DEV' : 'PROD'
+import { IS_DEV } from '@/lib/constants'
 
 export const auth = lucia({
   adapter: libsql(client, tableNames),

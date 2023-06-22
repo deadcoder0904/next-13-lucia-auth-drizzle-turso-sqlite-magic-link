@@ -4,20 +4,13 @@ import { users, sessions, keys, emailVerificationTokens } from '@/app/db/schema'
 import { db } from '@/app/db/index'
 
 export const DELETE = async () => {
-  console.log('🏁 /api/delete')
+  console.log('🏁 /api/delete-all')
   try {
     await db.transaction(async (tx) => {
-      const deletedEmailVerificationTokens = tx.delete(emailVerificationTokens)
-      const deletedKeys = tx.delete(keys)
-      const deletedSessions = tx.delete(sessions)
-      const deletedUsers = tx.delete(users)
-
-      console.log({
-        deletedUsers,
-        deletedSessions,
-        deletedKeys,
-        deletedEmailVerificationTokens,
-      })
+      await tx.delete(emailVerificationTokens).run()
+      await tx.delete(keys).run()
+      await tx.delete(sessions).run()
+      await tx.delete(users).run()
     })
   } catch (error) {
     return NextResponse.json({ error, success: false })

@@ -1,33 +1,34 @@
 'use client'
 
-import ky from 'ky'
 import React from 'react'
+import ky from 'ky'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 
-export const Signup = () => {
+interface Params {
+  params: {
+    token: string
+  }
+}
+
+const VerifyEmail = ({ params }: Params) => {
+  const { token } = params
   const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get('email')
-
-    if (email?.toString().trim().length === 0) return
-
+  React.useEffect(() => {
     toast.promise(
       new Promise<string>(async (resolve, reject) => {
         try {
-          await ky.post('/api/signup', {
-            json: { email },
+          await ky.post('/api/verify-email', {
+            json: { token },
             hooks: {
               afterResponse: [
                 async (_, __, res) => {
                   if (res.status === 200) {
                     resolve(res.statusText)
                     setTimeout(() => {
-                      return router.push('/check-email')
+                      return router.push('/dashboard')
                     }, 2000)
                   }
                   if (res.status === 400 && res.statusText) {
@@ -42,11 +43,16 @@ export const Signup = () => {
         }
       }),
       {
-        loading: 'signing up...',
+        loading: 'logging in...',
         success: (msg) => msg,
-        error: (err) => err || 'error signing up...',
+        error: (err) => err || 'error logging in...',
       }
     )
+  }, [router, token])
+
+  const resendMagicLink = () => {
+    // todo
+    toast.error('not implemented yet.')
   }
 
   return (
@@ -54,12 +60,14 @@ export const Signup = () => {
       <Link href="/" className="anchor-dark">
         go home
       </Link>
-      <form onSubmit={handleSubmit}>
-        <input type="email" name="email" id="email" />
-        <button type="submit">signup</button>
-      </form>
+      <h1 className="text-sky-500">
+        didn&apos;t get email? send verification link again.
+      </h1>
+      <button type="button" onClick={resendMagicLink}>
+        resend magic link
+      </button>
     </>
   )
 }
 
-export default Signup
+export default VerifyEmail

@@ -1,27 +1,21 @@
-'use client'
-
-import ky from 'ky'
 import React from 'react'
-import Link from 'next/link'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-const Dashboard = () => {
-  const handleSubmit = async () => {
-    const { success }: { success: string } = await ky.post('/api/logout').json()
+import { auth } from '@/app/auth/lucia'
+import { Logout } from '@/components/Logout'
 
-    if (success) {
-      alert('logout successful!')
-    }
-  }
+const Dashboard = async () => {
+  const authRequest = auth.handleRequest({ cookies })
+  const session = await authRequest.validate()
+
+  if (!session) redirect('/login')
 
   return (
-    <>
-      <Link href="/" className="anchor-dark">
-        go home
-      </Link>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">logout</button>
-      </form>
-    </>
+    <main className="flex">
+      <p>welcome to dashboard, user {session.user.email.split('@')[0]}!!!</p>
+      <Logout />
+    </main>
   )
 }
 

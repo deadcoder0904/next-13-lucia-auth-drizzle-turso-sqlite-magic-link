@@ -1,33 +1,16 @@
-'use client'
-
+import React from 'react'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import ky from 'ky'
-import toast, { Toaster } from 'react-hot-toast'
 
-export default function Home() {
-  const deleteAll = async () => {
-    toast.promise(
-      new Promise<void>(async (resolve, reject) => {
-        try {
-          const { success }: { success: string } = await ky
-            .delete('/api/delete-all')
-            .json()
-          if (success) {
-            resolve()
-          } else {
-            reject()
-          }
-        } catch (e) {
-          reject()
-        }
-      }),
-      {
-        loading: 'Deleting all rows...',
-        success: 'All rows deleted!!!',
-        error: 'Error deleting...',
-      }
-    )
-  }
+import { auth } from '@/app/auth/lucia'
+import { DeleteAll } from '@/components/DeleteAll'
+
+const Home = async () => {
+  const authRequest = auth.handleRequest({ cookies })
+  const session = await authRequest.validate()
+
+  if (session) redirect('/dashboard')
 
   return (
     <main className="space-x-2 flex w-full">
@@ -37,13 +20,15 @@ export default function Home() {
       <Link href="/login" className="anchor">
         login
       </Link>
-      <button
-        onClick={deleteAll}
-        className="text-red-500 underline absolute right-8"
+      <Link
+        href="/api/get-all"
+        className="text-amber-400 underline absolute right-28"
       >
-        delete all
-      </button>
-      <Toaster />
+        get all
+      </Link>
+      <DeleteAll />
     </main>
   )
 }
+
+export default Home

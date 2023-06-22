@@ -31,7 +31,7 @@ export const sessions = sqliteTable(
     id: text('id').primaryKey(),
     userId: text('user_id')
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
     activeExpires: integer('active_expires').notNull(),
     idleExpires: integer('idle_expires').notNull(),
   },
@@ -55,7 +55,7 @@ export const keys = sqliteTable(
     id: text('id').primaryKey(),
     userId: text('user_id')
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
     hashedPassword: text('hashed_password'),
   },
   (key) => {
@@ -78,7 +78,7 @@ export const emailVerificationTokens = sqliteTable(
     id: text('id').primaryKey(),
     userId: text('user_id')
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
     expires: integer('expires'),
   }
 )

@@ -8,9 +8,6 @@ dependencies:
   '@libsql/client':
     specifier: ^0.2.2
     version: 0.2.2
-  '@lucia-auth/adapter-sqlite':
-    specifier: 2.0.0-beta.0
-    version: 2.0.0-beta.0(lucia@2.0.0-beta.2)
   '@react-email/components':
     specifier: ^0.0.7
     version: 0.0.7
@@ -654,18 +651,6 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    dev: false
-
-  /@lucia-auth/adapter-sqlite@2.0.0-beta.0(lucia@2.0.0-beta.2):
-    resolution: {integrity: sha512-hNwUruewxnaNv2eEtsCx2ZTtfMnjOY5QvGkoxzG0o5uVoGzjcpXTGarQYTLkYwLzSlBydZPGORconB/3ad244w==}
-    peerDependencies:
-      better-sqlite3: ^8.0.0
-      lucia: ^2.0.0
-    peerDependenciesMeta:
-      better-sqlite3:
-        optional: true
-    dependencies:
-      lucia: 2.0.0-beta.2
     dev: false
 
   /@next/env@13.4.7:

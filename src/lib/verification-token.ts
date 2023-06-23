@@ -50,7 +50,6 @@ export const validateEmailVerificationToken = async (token: string) => {
   if (!storedToken.rows.length) return null
 
   const tokenExpires = Number(storedToken.rows[0].expires)
-  console.log({ tokenExpires })
   if (!isWithinExpiration(tokenExpires)) return null
 
   const userId = String(storedToken.rows[0]['user_id'])
@@ -61,10 +60,5 @@ export const validateEmailVerificationToken = async (token: string) => {
     .where(eq(emailVerificationTokens.userId, userId))
     .run()
 
-  console.log({
-    tokenExpires,
-    x: emailVerificationTokens.userId,
-    y: storedToken.rows[0]['user_id'],
-  })
   return userId
 }

@@ -1,16 +1,11 @@
 import React from 'react'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import Link from 'next/link'
 
-import { auth } from '@/app/auth/lucia'
 import { DeleteAll } from '@/components/DeleteAll'
+import { validateSession } from '@/lib/validate-session'
 
 const Home = async () => {
-  const authRequest = auth.handleRequest({ cookies })
-  const session = await authRequest.validate()
-
-  if (session) redirect('/dashboard')
+  await validateSession('/dashboard', true)
 
   return (
     <main className="space-x-2 flex w-full">

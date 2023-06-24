@@ -1,15 +1,10 @@
 import React from 'react'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 
-import { auth } from '@/app/auth/lucia'
 import { Logout } from '@/components/Logout'
+import { validateSession } from '@/lib/validate-session'
 
 const Dashboard = async () => {
-  const authRequest = auth.handleRequest({ cookies })
-  const session = await authRequest.validate()
-
-  if (!session) redirect('/login')
+  // const session = await validateSession('/login', false)
 
   return (
     <main className="flex">

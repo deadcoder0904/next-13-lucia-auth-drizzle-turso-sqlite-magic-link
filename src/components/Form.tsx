@@ -12,9 +12,12 @@ interface Props {
   buttonName: string
 }
 
-const Form = ({ requestUrl, successUrl, toastMsg, buttonName }: Props) => {
-  console.log({ requestUrl, successUrl, toastMsg, buttonName })
-
+export const Form = ({
+  requestUrl,
+  successUrl,
+  toastMsg,
+  buttonName,
+}: Props) => {
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,5 +69,3 @@ const Form = ({ requestUrl, successUrl, toastMsg, buttonName }: Props) => {
     </>
   )
 }
-
-export default Form

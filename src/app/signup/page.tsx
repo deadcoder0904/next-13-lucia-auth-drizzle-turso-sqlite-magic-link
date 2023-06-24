@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import Form from '@/components/Form'
+import { Form } from '@/components/Form'
 import { validateSession } from '@/lib/validate-session'
 
 export const Signup = async () => {

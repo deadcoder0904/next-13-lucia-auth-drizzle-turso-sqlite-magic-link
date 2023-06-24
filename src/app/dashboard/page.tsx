@@ -4,7 +4,7 @@ import { Logout } from '@/components/Logout'
 import { validateSession } from '@/lib/validate-session'
 
 const Dashboard = async () => {
-  // const session = await validateSession('/login', false)
+  const session = await validateSession('/login', false)
 
   return (
     <main className="flex">

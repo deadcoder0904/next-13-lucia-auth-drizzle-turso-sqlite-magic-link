@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import vine, { errors } from '@vinejs/vine'
 
 import { auth } from '@/app/auth/lucia'
@@ -33,8 +33,14 @@ export const POST = async (request: Request) => {
       })
     }
     await auth.invalidateAllUserSessions(userId)
-    const session = await auth.createSession(userId)
-    const authRequest = auth.handleRequest({ request, cookies })
+    const session = await auth.createSession({
+      userId,
+      attributes: {},
+    })
+    const authRequest = auth.handleRequest({
+      cookies,
+      request: request as NextRequest | null,
+    })
     authRequest.setSession(session)
 
     return NextResponse.json(null, {

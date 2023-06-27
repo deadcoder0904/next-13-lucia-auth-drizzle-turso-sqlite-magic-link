@@ -1,10 +1,13 @@
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 import { auth } from '@/app/auth/lucia'
 
 export const DELETE = async (request: Request) => {
-  const authRequest = auth.handleRequest({ request, cookies })
+  const authRequest = auth.handleRequest({
+    request: request as NextRequest,
+    cookies,
+  })
   const session = await authRequest.validate()
   if (!session) {
     return NextResponse.json(

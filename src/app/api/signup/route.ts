@@ -53,7 +53,10 @@ export const POST = async (request: Request) => {
         email: req.email,
       },
     })
-    const session = await auth.createSession(newUser.userId)
+    const session = await auth.createSession({
+      userId: newUser.userId,
+      attributes: {},
+    })
     const magicLink = await generateVerificationToken(session.user.userId)
 
     console.log({

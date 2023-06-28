@@ -4,7 +4,7 @@ import { Form } from '@/components/Form'
 import { validateSession } from '@/lib/validate-session'
 
 export const Signup = async () => {
-  // await validateSession('/dashboard', true)
+  await validateSession('/dashboard', true)
 
   return (
     <>

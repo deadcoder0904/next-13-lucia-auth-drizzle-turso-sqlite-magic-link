@@ -39,8 +39,6 @@ export const MagicLinkEmail = ({ magicLink }: MagicLinkEmailProps) => (
   </Html>
 )
 
-export default MagicLinkEmail
-
 const main = {
   backgroundColor: '#ffffff',
   fontFamily:

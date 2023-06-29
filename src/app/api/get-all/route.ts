@@ -4,7 +4,7 @@ import { users, sessions, keys, emailVerificationTokens } from '@/app/db/schema'
 import { db } from '@/app/db/index'
 
 export const GET = async () => {
-  console.log('🏁 /api/get-all')
+  console.log('🏁 GET /api/get-all')
 
   let data: any[] = []
 

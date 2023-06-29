@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/app/auth/lucia'
 
 export const DELETE = async (request: Request) => {
+  console.log('🏁 DELETE /api/logout/route')
+
   const authRequest = auth.handleRequest({
     request: request as NextRequest,
     cookies,

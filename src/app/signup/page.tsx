@@ -15,7 +15,7 @@ export const Signup = async () => {
         requestUrl="/api/signup"
         successUrl="/check-email"
         toastMsg="signing up..."
-        buttonName="sign in"
+        buttonName="sign up"
       />
     </>
   )

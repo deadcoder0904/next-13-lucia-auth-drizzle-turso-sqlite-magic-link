@@ -4,7 +4,7 @@ import { users, sessions, keys, emailVerificationTokens } from '@/app/db/schema'
 import { db } from '@/app/db/index'
 
 export const DELETE = async () => {
-  console.log('🏁 /api/delete-all')
+  console.log('🏁 DELETE /api/delete-all')
   try {
     await db.transaction(async (tx) => {
       await tx.delete(emailVerificationTokens).run()

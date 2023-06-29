@@ -5,6 +5,7 @@ import ky from 'ky'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
+import { Form } from '@/components/Form'
 
 interface Params {
   params: {
@@ -50,11 +51,6 @@ const VerifyEmail = ({ params }: Params) => {
     )
   }, [router, token])
 
-  const resendMagicLink = () => {
-    // todo
-    toast.error('not implemented yet.')
-  }
-
   return (
     <>
       <Link href="/" className="anchor-dark">
@@ -63,9 +59,12 @@ const VerifyEmail = ({ params }: Params) => {
       <h1 className="text-sky-500">
         didn&apos;t get email? send verification link again.
       </h1>
-      <button type="button" onClick={resendMagicLink}>
-        resend magic link
-      </button>
+      <Form
+        requestUrl="/api/login"
+        successUrl="/check-email"
+        toastMsg="logging in..."
+        buttonName="resend magic link"
+      />
     </>
   )
 }

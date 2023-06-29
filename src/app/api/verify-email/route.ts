@@ -7,7 +7,7 @@ import { validateEmailVerificationToken } from '@/lib/verification-token'
 
 export const POST = async (request: Request) => {
   const req = await request.json()
-  console.log('🏁 /api/verify-email')
+  console.log('🏁 POST /api/verify-email')
 
   const schema = vine.object({
     token: vine.string(),
@@ -15,16 +15,9 @@ export const POST = async (request: Request) => {
 
   try {
     const validator = vine.compile(schema)
-    await validator.validate(req)
-  } catch (error) {
-    if (error instanceof errors.E_VALIDATION_ERROR) {
-      console.log(error.messages)
-      return NextResponse.json({ error: error.messages }, { status: 400 })
-    }
-  }
+    const { token } = await validator.validate(req)
 
-  try {
-    const userId = await validateEmailVerificationToken(req.token)
+    const userId = await validateEmailVerificationToken(token)
 
     if (!userId) {
       return NextResponse.json(null, {
@@ -48,8 +41,12 @@ export const POST = async (request: Request) => {
       statusText: 'logging in...',
     })
   } catch (error) {
-    console.error(error)
+    if (error instanceof errors.E_VALIDATION_ERROR) {
+      console.log(error.messages)
+      return NextResponse.json({ error: error.messages }, { status: 400 })
+    }
 
+    console.error(error)
     return NextResponse.json(error, {
       status: 400,
     })

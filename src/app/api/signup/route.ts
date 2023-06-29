@@ -5,14 +5,11 @@ import { eq } from 'drizzle-orm'
 import { auth } from '@/app/auth/lucia'
 import { db } from '@/app/db'
 import { users } from '@/app/db/schema'
-import { MagicLinkEmail } from '@/components/resend/MagicLink'
-import { resend } from '@/lib/resend'
-import { generateVerificationToken } from '@/lib/verification-token'
-import { EMAIL_VERIFICATION_URL } from '@/lib/constants'
+import { sendEmail } from '@/lib/send-email'
 
 export const POST = async (request: Request) => {
   const req = await request.json()
-  console.log('🏁 /api/signup/route')
+  console.log('🏁 POST /api/signup/route')
 
   const schema = vine.object({
     email: vine.string(),
@@ -20,16 +17,8 @@ export const POST = async (request: Request) => {
 
   try {
     const validator = vine.compile(schema)
-    await validator.validate(req)
-  } catch (error) {
-    if (error instanceof errors.E_VALIDATION_ERROR) {
-      console.log(error.messages)
-      return NextResponse.json({ error: error.messages }, { status: 400 })
-    }
-  }
+    const { email } = await validator.validate(req)
 
-  try {
-    const email = req.email
     const user = await db
       .select()
       .from(users)
@@ -53,30 +42,25 @@ export const POST = async (request: Request) => {
         email: req.email,
       },
     })
-    const session = await auth.createSession({
+
+    await auth.createSession({
       userId: newUser.userId,
       attributes: {},
     })
-    const magicLink = await generateVerificationToken(session.user.userId)
 
-    console.log({
-      magicLink: `${EMAIL_VERIFICATION_URL}/${magicLink}`,
-    })
-
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: 'Magic Link',
-      react: MagicLinkEmail({ magicLink }),
-    })
+    sendEmail(newUser.userId, email)
 
     return NextResponse.json(null, {
       status: 200,
       statusText: 'check your email for magic link!!!',
     })
   } catch (error) {
-    console.error(error)
+    if (error instanceof errors.E_VALIDATION_ERROR) {
+      console.log(error.messages)
+      return NextResponse.json({ error: error.messages }, { status: 400 })
+    }
 
+    console.error(error)
     return NextResponse.json(error, {
       status: 400,
     })

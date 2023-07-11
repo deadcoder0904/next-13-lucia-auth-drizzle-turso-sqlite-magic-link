@@ -1,6 +1,6 @@
 import { lucia } from 'lucia'
 import { nextjs } from 'lucia/middleware'
-import { libsql } from 'lucia-libsql-adapter'
+import { libsql } from '@lucia-auth/adapter-sqlite'
 
 import { client } from '@/app/db/index'
 import { tableNames } from '@/app/db/schema'

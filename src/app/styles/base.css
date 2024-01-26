@@ -3,7 +3,7 @@ html {
 }
 
 form {
-  @apply space-x-2 mt-2;
+  @apply mt-2;
 }
 
 input[type='email'] {

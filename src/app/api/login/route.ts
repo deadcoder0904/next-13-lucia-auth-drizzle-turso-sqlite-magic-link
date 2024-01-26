@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server'
 import { and, eq } from 'drizzle-orm'
 import vine, { errors } from '@vinejs/vine'
 
-import { auth } from '@/app/auth/lucia'
-import { users } from '@/app/db/schema'
+import { validateRequest } from '@/app/auth/lucia'
+import { userTable } from '@/app/db/schema'
 import { db } from '@/app/db/index'
 
 export const POST = async (request: Request) => {
@@ -25,10 +25,10 @@ export const POST = async (request: Request) => {
   }
 
   try {
-    const user = await db
+    const user = db
       .select()
-      .from(users)
-      .where(and(eq(users.email, req.email)))
+      .from(userTable)
+      .where(and(eq(userTable.email, req.email)))
       .all()
 
     console.log({ user })

@@ -8,10 +8,10 @@
 cp .env.example .env # duplicate .env.example & name it .env
 ```
 
-2. Change `SQLITE_URL` to the filename of your choice
+2. Change `DATABASE_PATH` to the filename of your choice
 
 ```bash
-SQLITE_URL=sqlite.db
+DATABASE_PATH=sqlite.db
 ```
 
 ## Install the dependencies

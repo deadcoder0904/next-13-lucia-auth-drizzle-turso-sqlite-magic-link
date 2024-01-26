@@ -1,36 +1,73 @@
-import { lucia } from 'lucia'
-import { nextjs } from 'lucia/middleware'
-import { betterSqlite3 } from '@lucia-auth/adapter-sqlite'
+import React from 'react'
+import { Lucia, type User, type Session } from 'lucia'
+import { cookies } from 'next/headers'
 
 import { db } from '@/app/db/index'
-import { tableNames } from '@/app/db/schema'
+import { userTable, sessionTable } from '@/app/db/schema'
+import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
 
-export const IS_DEV = process.env['NODE_ENV'] === 'development' ? 'DEV' : 'PROD'
+export const IS_DEV = process.env.NODE_ENV === 'development' ? 'DEV' : 'PROD'
 
-export const auth = lucia({
-  adapter: betterSqlite3(db as any, tableNames),
-  env: IS_DEV,
-  middleware: nextjs(),
+const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable)
+
+export const lucia = new Lucia(adapter, {
+  sessionCookie: {
+    name: 'user_session',
+    expires: false,
+    attributes: {
+      secure: !IS_DEV,
+    },
+  },
   getUserAttributes: (user: any) => {
     return {
       email: user.email,
     }
   },
-  csrfProtection: true,
-  requestOrigins: ['http://localhost:3000'],
-  sessionCookie: {
-    name: 'user_session',
-    attributes: {
-      sameSite: 'strict',
-    },
-  },
-  sessionExpiresIn: {
-    activePeriod: 1000 * 60 * 60 * 24 * 30, // 1 month
-    idlePeriod: 0, // disable session renewal
-  },
-  experimental: {
-    debugMode: IS_DEV ? true : false,
-  },
 })
 
-export type Auth = typeof auth
+export const validateRequest = React.cache(
+  async (): Promise<
+    { user: User; session: Session } | { user: null; session: null }
+  > => {
+    const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
+    if (!sessionId) {
+      return {
+        user: null,
+        session: null,
+      }
+    }
+
+    const result = await lucia.validateSession(sessionId)
+    // next.js throws when you attempt to set cookie when rendering page
+    try {
+      if (result.session && result.session.fresh) {
+        const sessionCookie = lucia.createSessionCookie(result.session.id)
+        cookies().set(
+          sessionCookie.name,
+          sessionCookie.value,
+          sessionCookie.attributes
+        )
+      }
+      if (!result.session) {
+        const sessionCookie = lucia.createBlankSessionCookie()
+        cookies().set(
+          sessionCookie.name,
+          sessionCookie.value,
+          sessionCookie.attributes
+        )
+      }
+    } catch {}
+    return result
+  }
+)
+
+declare module 'lucia' {
+  interface Register {
+    Lucia: typeof lucia
+    DatabaseUserAttributes: DatabaseUserAttributes
+  }
+}
+
+interface DatabaseUserAttributes {
+  email: string
+}

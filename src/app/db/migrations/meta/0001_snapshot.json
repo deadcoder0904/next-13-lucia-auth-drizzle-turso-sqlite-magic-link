@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "3bf4ae5c-0bac-4993-8365-24b36d28f25b",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "131bf06a-8c2d-4f2f-bc29-607e35ed23a5",
+  "prevId": "3bf4ae5c-0bac-4993-8365-24b36d28f25b",
   "tables": {
     "email_verification_token": {
       "name": "email_verification_token",
@@ -93,8 +93,8 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},

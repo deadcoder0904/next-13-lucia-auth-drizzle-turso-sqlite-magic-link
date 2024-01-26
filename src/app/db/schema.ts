@@ -7,88 +7,59 @@ import {
 
 import { relations } from 'drizzle-orm'
 
-export const tableNames = {
-  user: 'auth_user',
-  session: 'auth_session',
-  key: 'auth_key',
-  emailVerificationToken: 'email_verification_token',
-}
-
-export const users = sqliteTable(tableNames.user, {
+export const userTable = sqliteTable('user', {
   id: text('id').primaryKey(),
-  email: text('email').notNull(),
+  email: text('email').unique().notNull(),
 })
 
-export const usersRelations = relations(users, ({ many }) => ({
-  session: many(sessions),
-  key: many(keys),
-  emailVerificationToken: many(emailVerificationTokens),
+export const userTableRelations = relations(userTable, ({ many }) => ({
+  session: many(sessionTable),
+  emailVerificationToken: many(emailVerificationTokenTable),
 }))
 
-export const sessions = sqliteTable(
-  tableNames.session,
+export const sessionTable = sqliteTable(
+  'session',
   {
     id: text('id').primaryKey(),
     userId: text('user_id')
       .notNull()
-      .references(() => users.id),
-    activeExpires: integer('active_expires').notNull(),
-    idleExpires: integer('idle_expires').notNull(),
+      .references(() => userTable.id, {
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+      }),
+    expiresAt: integer('expires_at').notNull(),
   },
   (session) => {
     return {
-      userIdx: uniqueIndex('session_user_idx').on(session.userId),
+      userIdx: uniqueIndex('session_userId_idx').on(session.userId),
     }
   }
 )
 
-export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
-    fields: [sessions.userId],
-    references: [users.id],
+export const sessionTableRelations = relations(sessionTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [sessionTable.userId],
+    references: [userTable.id],
   }),
 }))
 
-export const keys = sqliteTable(
-  tableNames.key,
+export const emailVerificationTokenTable = sqliteTable(
+  'email_verification_token',
   {
     id: text('id').primaryKey(),
     userId: text('user_id')
       .notNull()
-      .references(() => users.id),
-    hashedPassword: text('hashed_password'),
-  },
-  (key) => {
-    return {
-      userIdx: uniqueIndex('keys_user_idx').on(key.userId),
-    }
-  }
-)
-
-export const keysRelations = relations(keys, ({ one }) => ({
-  user: one(users, {
-    fields: [keys.userId],
-    references: [users.id],
-  }),
-}))
-
-export const emailVerificationTokens = sqliteTable(
-  tableNames.emailVerificationToken,
-  {
-    id: text('id').primaryKey(),
-    userId: text('user_id')
-      .notNull()
-      .references(() => users.id),
+      .references(() => userTable.id),
     expires: integer('expires'),
   }
 )
 
-export const emailVerificationTokensRelations = relations(
-  emailVerificationTokens,
+export const emailVerificationTokenTableRelations = relations(
+  emailVerificationTokenTable,
   ({ one }) => ({
-    user: one(users, {
-      fields: [emailVerificationTokens.userId],
-      references: [users.id],
+    user: one(userTable, {
+      fields: [emailVerificationTokenTable.userId],
+      references: [userTable.id],
     }),
   })
 )

@@ -1,5 +1,5 @@
 namespace NodeJS {
   interface ProcessEnv {
-    SQLITE_URL: string
+    DATABASE_PATH: string
   }
 }

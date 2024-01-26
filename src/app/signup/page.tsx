@@ -1,38 +1,42 @@
 'use client'
 
-import ky from 'ky'
 import React from 'react'
+import { useFormState } from 'react-dom'
 import Link from 'next/link'
+import { getFormProps, getInputProps, useForm } from '@conform-to/react'
+import { parseWithZod } from '@conform-to/zod'
 
-export const Signup = () => {
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get('email')
+import { signup } from '@/app/lib/actions'
+import { createSignupSchema, signupSchema } from '@/app/lib/zod-schema'
 
-    console.log({ email })
-    const { success }: { success: string } = await ky
-      .post('/api/signup', {
-        json: { email },
+export default function SignupPage() {
+  const [lastResult, action] = useFormState(signup, undefined)
+
+  const [form, fields] = useForm({
+    id: 'signup-form',
+    lastResult,
+    onValidate({ formData }) {
+      return parseWithZod(formData, {
+        schema: (control) => createSignupSchema(control),
       })
-      .json()
-
-    if (success) {
-      alert('signup successful!')
-    }
-  }
+    },
+    shouldValidate: 'onBlur',
+  })
 
   return (
     <>
       <Link href="/" className="anchor-dark">
         go home
       </Link>
-      <form onSubmit={handleSubmit}>
-        <input type="email" name="email" id="email" />
+      <form action={action} {...getFormProps(form)}>
+        <input
+          className={!fields.email.valid ? 'text-red-500' : ''}
+          {...getInputProps(fields.email, { type: 'email' })}
+          key={fields.email.key}
+        />
+        <div className="text-red-500">{fields.email.errors}</div>
         <button type="submit">signup</button>
       </form>
     </>
   )
 }
-
-export default Signup

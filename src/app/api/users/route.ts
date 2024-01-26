@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 
-import { users } from '@/app/db/schema'
+import { userTable } from '@/app/db/schema'
 import { db } from '@/app/db/index'
 
 export const GET = async () => {
-  const allUsers = await db.select().from(users).all()
+  const allUsers = db.select().from(userTable).all()
   return NextResponse.json(allUsers)
 }

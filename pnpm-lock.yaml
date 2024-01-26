@@ -6,20 +6,17 @@ settings:
 
 dependencies:
   '@conform-to/react':
-    specifier: 1.0.0-rc.0
-    version: 1.0.0-rc.0(react@18.2.0)
+    specifier: 0.9.1
+    version: 0.9.1(react@18.2.0)
   '@conform-to/zod':
-    specifier: 1.0.0-rc.0
-    version: 1.0.0-rc.0(zod@3.22.4)
+    specifier: 0.9.1
+    version: 0.9.1(@conform-to/dom@0.9.1)(zod@3.22.4)
   '@lucia-auth/adapter-drizzle':
-    specifier: 1.0.0-beta.7
-    version: 1.0.0-beta.7(lucia@3.0.0-beta.15)
-  '@lucia-auth/adapter-sqlite':
-    specifier: 3.0.0-beta.13
-    version: 3.0.0-beta.13(better-sqlite3@9.3.0)(lucia@3.0.0-beta.15)
+    specifier: 1.0.0-beta.0
+    version: 1.0.0-beta.0(lucia@3.0.0-beta.15)
   '@types/node':
-    specifier: 20.11.6
-    version: 20.11.6
+    specifier: 20.11.7
+    version: 20.11.7
   '@types/react':
     specifier: 18.2.48
     version: 18.2.48
@@ -56,9 +53,9 @@ dependencies:
   next:
     specifier: 14.1.0
     version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
-  oslo:
-    specifier: ^1.0.1
-    version: 1.0.1
+  next-client-cookies:
+    specifier: ^1.1.0
+    version: 1.1.0(next@14.1.0)(react@18.2.0)
   postcss:
     specifier: 8.4.33
     version: 8.4.33
@@ -87,7 +84,7 @@ devDependencies:
     version: 0.20.13
   knip:
     specifier: ^4.2.1
-    version: 4.2.1(@types/node@20.11.6)(typescript@5.3.3)
+    version: 4.2.1(@types/node@20.11.7)(typescript@5.3.3)
   rimraf:
     specifier: ^5.0.5
     version: 5.0.5
@@ -133,25 +130,26 @@ packages:
       regenerator-runtime: 0.14.1
     dev: false
 
-  /@conform-to/dom@1.0.0-rc.0:
-    resolution: {integrity: sha512-SMs029c+BQuaVt/lin2f8RAL+cwox48EPo0cUMkzz0Oc5rS+GY4scSihS8f1mEBslblvzwzNm0xkiF1WjbDT8g==}
+  /@conform-to/dom@0.9.1:
+    resolution: {integrity: sha512-+T6QgpLDPZ29j4y5nWW61WMe8qj0cQBymyzbi5sq1f3CcBO3wBbR0VPI7mbm+rLoErHWM3ghhdNlIkw0UPoLLA==}
     dev: false
 
-  /@conform-to/react@1.0.0-rc.0(react@18.2.0):
-    resolution: {integrity: sha512-a975XaxVvO+K3eSjEcnJmb9GvAaAB3DbP3iyfhuOT8ItX0x4GB9KGYO21VBR+c3vce3AJGbBLQDrc7MBw6DZvw==}
+  /@conform-to/react@0.9.1(react@18.2.0):
+    resolution: {integrity: sha512-SibYHk86IFh60LRPk4aJHJOgyLTgb3JYphKvG4vcemyuntdOwncd5YM/GDoccVzeCTmJi4Os/fDtOOAaDcSa9w==}
     peerDependencies:
-      react: '>=18'
+      react: '>=16.8'
     dependencies:
-      '@conform-to/dom': 1.0.0-rc.0
+      '@conform-to/dom': 0.9.1
       react: 18.2.0
     dev: false
 
-  /@conform-to/zod@1.0.0-rc.0(zod@3.22.4):
-    resolution: {integrity: sha512-eA7mTmdYO2vDPGLxeW57wVJ6B+6LzF3nxz9bYhuVHjEBcvosOLmoy0pnGg3esACjCpaUFPsHtwSLhThzWstLzw==}
+  /@conform-to/zod@0.9.1(@conform-to/dom@0.9.1)(zod@3.22.4):
+    resolution: {integrity: sha512-4hWBGzRpSd4RrlBFRXjS6QQ2MWFpMZDbDwz8H/xiq38Xl5yaL1RSZMhOJ4pmsmy8CIKghs78qvaD8ltTFlrNvQ==}
     peerDependencies:
+      '@conform-to/dom': 0.9.1
       zod: ^3.21.0
     dependencies:
-      '@conform-to/dom': 1.0.0-rc.0
+      '@conform-to/dom': 0.9.1
       zod: 3.22.4
     dev: false
 
@@ -719,27 +717,11 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: false
 
-  /@lucia-auth/adapter-drizzle@1.0.0-beta.7(lucia@3.0.0-beta.15):
-    resolution: {integrity: sha512-RXe9bX/ZvfSSKtEp3skraqHd3zwoX/Qt4r/GkCzJDJOA03t2PBrVVJZZXRizmHliAoADcG1aMkjksOkP7Czz9g==}
+  /@lucia-auth/adapter-drizzle@1.0.0-beta.0(lucia@3.0.0-beta.15):
+    resolution: {integrity: sha512-L4e8zJATX1PbIvvSNQ/VwxrVebEZKtzUkPdFBFSpbVUuc7aa6yqMyHm2lI4cHCWT76pwlZgQmAiE9O2AyqlX/A==}
     peerDependencies:
-      lucia: 3.0.0-beta.15
+      lucia: 3.0.0-beta.8
     dependencies:
-      lucia: 3.0.0-beta.15
-    dev: false
-
-  /@lucia-auth/adapter-sqlite@3.0.0-beta.13(better-sqlite3@9.3.0)(lucia@3.0.0-beta.15):
-    resolution: {integrity: sha512-5jAAKQ6MqoxmKulg/w50z1R1eAc0MysRaV0DC7Pip1eFgsyXvNnuhniVOYBv4TG3OIsebTHP/N019Kb6i9lC4Q==}
-    peerDependencies:
-      '@libsql/client': ^0.3.0
-      better-sqlite3: 8.x - 9.x
-      lucia: 3.0.0-beta.15
-    peerDependenciesMeta:
-      '@libsql/client':
-        optional: true
-      better-sqlite3:
-        optional: true
-    dependencies:
-      better-sqlite3: 9.3.0
       lucia: 3.0.0-beta.15
     dev: false
 
@@ -1390,14 +1372,14 @@ packages:
   /@types/better-sqlite3@7.6.9:
     resolution: {integrity: sha512-FvktcujPDj9XKMJQWFcl2vVl7OdRIqsSRX9b0acWwTmwLK9CF2eqo/FRcmMLNpugKoX/avA6pb7TorDLmpgTnQ==}
     dependencies:
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
 
-  /@types/node@20.11.6:
-    resolution: {integrity: sha512-+EOokTnksGVgip2PbYbr3xnR7kZigh4LbybAfBAw5BpnQ+FqBYUsvCEjYd70IXKlbohQ64mzEYmMtlWUY8q//Q==}
+  /@types/node@20.11.7:
+    resolution: {integrity: sha512-GPmeN1C3XAyV5uybAf4cMLWT9fDWcmQhZVtMFu7OR32WjrqGG+Wnk2V1d0bmtUyE/Zy1QJ9BxyiTih9z8Oks8A==}
     dependencies:
       undici-types: 5.26.5
 
@@ -1787,7 +1769,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001580
-      electron-to-chromium: 1.4.646
+      electron-to-chromium: 1.4.647
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: false
@@ -2234,8 +2216,8 @@ packages:
       wcwidth: 1.0.1
     dev: true
 
-  /electron-to-chromium@1.4.646:
-    resolution: {integrity: sha512-vThkQ0JuF45qT/20KbRgM56lV7IuGt7SjhawQ719PDHzhP84KAO1WJoaxgCoAffKHK47FmVKP1Fqizx7CwK1SA==}
+  /electron-to-chromium@1.4.647:
+    resolution: {integrity: sha512-Z/fTNGwc45WrYQhPaEcz5tAJuZZ8G7S/DBnhS6Kgp4BxnS40Z/HqlJ0hHg3Z79IGVzuVartIlTcjw/cQbPLgOw==}
     dev: false
 
   /emoji-regex@8.0.0:
@@ -3389,6 +3371,11 @@ packages:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
 
+  /js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -3463,7 +3450,7 @@ packages:
       json-buffer: 3.0.1
     dev: false
 
-  /knip@4.2.1(@types/node@20.11.6)(typescript@5.3.3):
+  /knip@4.2.1(@types/node@20.11.7)(typescript@5.3.3):
     resolution: {integrity: sha512-KG++YCus11YyQQeiBxhXxv6NCJzol4AYER9q1kwZGFw+gwDzG/0Q6MN87McYFN74nGRX4O2xM5CA3TTPcbpn5A==}
     engines: {node: '>=18.6.0'}
     hasBin: true
@@ -3479,7 +3466,7 @@ packages:
       '@pnpm/logger': 5.0.0
       '@pnpm/workspace.pkgs-graph': 2.0.13(@pnpm/logger@5.0.0)
       '@snyk/github-codeowners': 1.1.0
-      '@types/node': 20.11.6
+      '@types/node': 20.11.7
       '@types/picomatch': 2.3.3
       easy-table: 1.2.0
       fast-glob: 3.3.2
@@ -3741,6 +3728,17 @@ packages:
       through2: 4.0.2
     dev: true
 
+  /next-client-cookies@1.1.0(next@14.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-e/rqQTXHSFuvUJELMeCDgM7dWW6IUNOGr7noWyRSgE/5l033UaqseDrjShfRZYG45JnrYKoX653OdXTJ8cn+NA==}
+    peerDependencies:
+      next: '>= 13.0.0'
+      react: '>= 16.8.0'
+    dependencies:
+      js-cookie: 3.0.5
+      next: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
   /next-tick@1.1.0:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
@@ -3956,13 +3954,6 @@ packages:
 
   /oslo@0.27.1:
     resolution: {integrity: sha512-AYU0LpwZ50wIMD3dr4NX0tQzjwxaejSSV9reiY9jbQfgODt49al3f3tMcijyddyvPknUPArz845vpswWyJTWvA==}
-    dependencies:
-      '@node-rs/argon2': 1.7.2
-      '@node-rs/bcrypt': 1.9.2
-    dev: false
-
-  /oslo@1.0.1:
-    resolution: {integrity: sha512-esfzZry+HfGgK/GCYkg7BRlLd3RH5aHa08wgLJPYjENXybi0BvXxGk0LbUj+lXfz2TkjPDHe4rB/o6JxRLHxBg==}
     dependencies:
       '@node-rs/argon2': 1.7.2
       '@node-rs/bcrypt': 1.9.2

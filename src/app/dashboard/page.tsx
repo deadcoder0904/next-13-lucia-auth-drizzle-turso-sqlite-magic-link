@@ -21,7 +21,7 @@ const Dashboard = () => {
 async function logout() {
   'use server'
   const { session } = await validateRequest()
-  console.log({ session })
+
   if (!session) {
     return {
       error: 'Unauthorized',

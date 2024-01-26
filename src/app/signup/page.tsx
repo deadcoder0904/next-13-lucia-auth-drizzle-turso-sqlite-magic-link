@@ -7,7 +7,7 @@ import { getFormProps, getInputProps, useForm } from '@conform-to/react'
 import { parseWithZod } from '@conform-to/zod'
 
 import { signup } from '@/app/lib/actions'
-import { createSignupSchema, signupSchema } from '@/app/lib/zod-schema'
+import { createSignupSchema } from '@/app/lib/zod-schema'
 
 export default function SignupPage() {
   const [lastResult, action] = useFormState(signup, undefined)

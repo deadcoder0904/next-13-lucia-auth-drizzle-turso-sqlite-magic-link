@@ -21,7 +21,7 @@ export function createSignupSchema(
       .email('Invalid Email address')
       // Pipe the schema so it runs only if the email is valid
       .pipe(
-        z.string().superRefine(async (email, ctx) => {
+        z.string().superRefine((email, ctx) => {
           const isValidatingEmail =
             intent === null ||
             (intent.type === 'validate' && intent.payload.name === 'email')

@@ -6,11 +6,11 @@ settings:
 
 dependencies:
   '@conform-to/react':
-    specifier: 0.9.1
-    version: 0.9.1(react@18.2.0)
+    specifier: 1.0.0-rc.0
+    version: 1.0.0-rc.0(react@18.2.0)
   '@conform-to/zod':
-    specifier: 0.9.1
-    version: 0.9.1(@conform-to/dom@0.9.1)(zod@3.22.4)
+    specifier: 1.0.0-rc.0
+    version: 1.0.0-rc.0(zod@3.22.4)
   '@lucia-auth/adapter-drizzle':
     specifier: 1.0.0-beta.0
     version: 1.0.0-beta.0(lucia@3.0.0-beta.15)
@@ -130,26 +130,25 @@ packages:
       regenerator-runtime: 0.14.1
     dev: false
 
-  /@conform-to/dom@0.9.1:
-    resolution: {integrity: sha512-+T6QgpLDPZ29j4y5nWW61WMe8qj0cQBymyzbi5sq1f3CcBO3wBbR0VPI7mbm+rLoErHWM3ghhdNlIkw0UPoLLA==}
+  /@conform-to/dom@1.0.0-rc.0:
+    resolution: {integrity: sha512-SMs029c+BQuaVt/lin2f8RAL+cwox48EPo0cUMkzz0Oc5rS+GY4scSihS8f1mEBslblvzwzNm0xkiF1WjbDT8g==}
     dev: false
 
-  /@conform-to/react@0.9.1(react@18.2.0):
-    resolution: {integrity: sha512-SibYHk86IFh60LRPk4aJHJOgyLTgb3JYphKvG4vcemyuntdOwncd5YM/GDoccVzeCTmJi4Os/fDtOOAaDcSa9w==}
+  /@conform-to/react@1.0.0-rc.0(react@18.2.0):
+    resolution: {integrity: sha512-a975XaxVvO+K3eSjEcnJmb9GvAaAB3DbP3iyfhuOT8ItX0x4GB9KGYO21VBR+c3vce3AJGbBLQDrc7MBw6DZvw==}
     peerDependencies:
-      react: '>=16.8'
+      react: '>=18'
     dependencies:
-      '@conform-to/dom': 0.9.1
+      '@conform-to/dom': 1.0.0-rc.0
       react: 18.2.0
     dev: false
 
-  /@conform-to/zod@0.9.1(@conform-to/dom@0.9.1)(zod@3.22.4):
-    resolution: {integrity: sha512-4hWBGzRpSd4RrlBFRXjS6QQ2MWFpMZDbDwz8H/xiq38Xl5yaL1RSZMhOJ4pmsmy8CIKghs78qvaD8ltTFlrNvQ==}
+  /@conform-to/zod@1.0.0-rc.0(zod@3.22.4):
+    resolution: {integrity: sha512-eA7mTmdYO2vDPGLxeW57wVJ6B+6LzF3nxz9bYhuVHjEBcvosOLmoy0pnGg3esACjCpaUFPsHtwSLhThzWstLzw==}
     peerDependencies:
-      '@conform-to/dom': 0.9.1
       zod: ^3.21.0
     dependencies:
-      '@conform-to/dom': 0.9.1
+      '@conform-to/dom': 1.0.0-rc.0
       zod: 3.22.4
     dev: false
 

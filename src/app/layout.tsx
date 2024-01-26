@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
 import clsx from 'clsx'
+import { CookiesProvider } from 'next-client-cookies/server'
 
 import '@/app/styles/index.css'
 
@@ -24,7 +25,7 @@ export default function RootLayout({
           'min-h-screen bg-gray-900 text-white p-4'
         )}
       >
-        {children}
+        <CookiesProvider>{children}</CookiesProvider>
       </body>
     </html>
   )

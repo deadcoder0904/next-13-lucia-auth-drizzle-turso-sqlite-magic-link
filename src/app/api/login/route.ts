@@ -4,7 +4,7 @@ import { and, eq } from 'drizzle-orm'
 import vine, { errors } from '@vinejs/vine'
 
 import { validateRequest } from '@/app/auth/lucia'
-import { userTable } from '@/app/db/schema'
+import { userTable } from '@/app/db/drizzle.schema'
 import { db } from '@/app/db/index'
 
 export const POST = async (request: Request) => {

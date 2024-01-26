@@ -3,7 +3,7 @@ import { Lucia, type User, type Session } from 'lucia'
 import { cookies } from 'next/headers'
 
 import { db } from '@/app/db/index'
-import { userTable, sessionTable } from '@/app/db/schema'
+import { userTable, sessionTable } from '@/app/db/drizzle.schema'
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
 
 export const IS_DEV = process.env.NODE_ENV === 'development' ? 'DEV' : 'PROD'

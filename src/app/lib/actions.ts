@@ -8,8 +8,8 @@ import { parseWithZod } from '@conform-to/zod'
 
 import { lucia } from '@/app/auth/lucia'
 import { db } from '@/app/db/index'
-import { userTable } from '@/app/db/schema'
-import { createSignupSchema } from '@/app/lib/zod-schema'
+import { userTable } from '@/app/db/drizzle.schema'
+import { createSignupSchema } from '@/app/lib/zod.schema'
 
 export async function signup(prevState: unknown, formData: FormData) {
   const userId = generateId(15)

@@ -8,7 +8,7 @@ import { parseWithZod } from '@conform-to/zod'
 import { useCookies } from 'next-client-cookies'
 
 import { signup } from '@/app/lib/actions'
-import { createSignupSchema } from '@/app/lib/zod-schema'
+import { createSignupSchema } from '@/app/lib/zod.schema'
 
 export default function Login() {
   const cookies = useCookies()

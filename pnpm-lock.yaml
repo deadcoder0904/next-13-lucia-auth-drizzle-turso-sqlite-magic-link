@@ -12,8 +12,8 @@ dependencies:
     specifier: 1.0.0-rc.0
     version: 1.0.0-rc.0(zod@3.22.4)
   '@lucia-auth/adapter-drizzle':
-    specifier: 1.0.0-beta.0
-    version: 1.0.0-beta.0(lucia@3.0.0-beta.15)
+    specifier: 1.0.0-beta.7
+    version: 1.0.0-beta.7(lucia@3.0.0-beta.15)
   '@types/node':
     specifier: 20.11.7
     version: 20.11.7
@@ -88,6 +88,9 @@ devDependencies:
   rimraf:
     specifier: ^5.0.5
     version: 5.0.5
+  tsx:
+    specifier: ^4.7.0
+    version: 4.7.0
 
 packages:
 
@@ -716,10 +719,10 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: false
 
-  /@lucia-auth/adapter-drizzle@1.0.0-beta.0(lucia@3.0.0-beta.15):
-    resolution: {integrity: sha512-L4e8zJATX1PbIvvSNQ/VwxrVebEZKtzUkPdFBFSpbVUuc7aa6yqMyHm2lI4cHCWT76pwlZgQmAiE9O2AyqlX/A==}
+  /@lucia-auth/adapter-drizzle@1.0.0-beta.7(lucia@3.0.0-beta.15):
+    resolution: {integrity: sha512-RXe9bX/ZvfSSKtEp3skraqHd3zwoX/Qt4r/GkCzJDJOA03t2PBrVVJZZXRizmHliAoADcG1aMkjksOkP7Czz9g==}
     peerDependencies:
-      lucia: 3.0.0-beta.8
+      lucia: 3.0.0-beta.15
     dependencies:
       lucia: 3.0.0-beta.15
     dev: false
@@ -2889,7 +2892,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /function-bind@1.1.2:
@@ -4847,6 +4849,17 @@ packages:
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: false
+
+  /tsx@4.7.0:
+    resolution: {integrity: sha512-I+t79RYPlEYlHn9a+KzwrvEwhJg35h/1zHsLC2JXvhC2mdynMv6Zxzvhv5EMV6VF5qJlLlkSnMVvdZV3PSIGcg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    dependencies:
+      esbuild: 0.19.12
+      get-tsconfig: 4.7.2
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
 
   /tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}

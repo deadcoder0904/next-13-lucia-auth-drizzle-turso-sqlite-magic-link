@@ -1,11 +1,13 @@
-import React from 'react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 
 import { lucia, validateRequest } from '@/app/auth/lucia'
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const { session } = await validateRequest()
+  if (!session) return redirect('/login')
+
   return (
     <>
       <Link href="/" className="anchor-dark">

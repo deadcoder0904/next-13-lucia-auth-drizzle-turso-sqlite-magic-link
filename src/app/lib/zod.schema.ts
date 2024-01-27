@@ -2,7 +2,7 @@ import type { Intent } from '@conform-to/react'
 import { conformZodMessage } from '@conform-to/zod'
 import { z } from 'zod'
 
-export const signupSchema = z.object({
+export const loginSchema = z.object({
   email: z
     .string({ required_error: 'Email is required' })
     .email('Invalid email address'),

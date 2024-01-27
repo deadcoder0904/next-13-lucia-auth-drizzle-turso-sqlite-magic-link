@@ -1,5 +1,5 @@
 import React from 'react'
-import { Lucia, type User, type Session } from 'lucia'
+import { Lucia, TimeSpan, type User, type Session } from 'lucia'
 import { cookies } from 'next/headers'
 
 import { db } from '@/app/db/index'
@@ -18,6 +18,7 @@ export const lucia = new Lucia(adapter, {
       secure: !IS_DEV,
     },
   },
+  sessionExpiresIn: new TimeSpan(2, 'w'), // 2 weeks
   getUserAttributes: (user: any) => {
     return {
       email: user.email,

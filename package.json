@@ -11,13 +11,15 @@
     "db:push": "drizzle-kit push:sqlite --config drizzle.config.ts",
     "db:generate": "drizzle-kit generate:sqlite --config drizzle.config.ts",
     "db:studio": "drizzle-kit studio --host localhost --port 3002 --verbose --config drizzle.config.ts",
+    "db:seed": "node --import tsx --env-file .env ./seed/insert.ts",
+    "db:delete": "node --import tsx --env-file .env ./seed/delete.ts",
     "clean": "rimraf .next",
     "knip": "knip"
   },
   "dependencies": {
     "@conform-to/react": "1.0.0-rc.0",
     "@conform-to/zod": "1.0.0-rc.0",
-    "@lucia-auth/adapter-drizzle": "1.0.0-beta.0",
+    "@lucia-auth/adapter-drizzle": "1.0.0-beta.7",
     "@types/node": "20.11.7",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
@@ -43,6 +45,7 @@
     "@types/better-sqlite3": "^7.6.9",
     "drizzle-kit": "^0.20.13",
     "knip": "^4.2.1",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "tsx": "^4.7.0"
   }
 }

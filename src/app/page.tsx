@@ -1,6 +1,12 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
-export default function Home() {
+import { validateRequest } from '@/app/auth/lucia'
+
+export default async function Home() {
+  const { session } = await validateRequest()
+  if (session) return redirect('/dashboard')
+
   return (
     <main className="space-x-2">
       <Link href="/signup" className="anchor">

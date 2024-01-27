@@ -1,42 +1,15 @@
-'use client'
+import { redirect } from 'next/navigation'
 
-import React from 'react'
-import { useFormState } from 'react-dom'
-import Link from 'next/link'
-import { getFormProps, getInputProps, useForm } from '@conform-to/react'
-import { parseWithZod } from '@conform-to/zod'
+import { SignupForm } from '@/app/components/form'
+import { validateRequest } from '@/app/auth/lucia'
 
-import { signup } from '@/app/lib/actions'
-import { createSignupSchema } from '@/app/lib/zod.schema'
-
-export default function SignupPage() {
-  const [lastResult, action] = useFormState(signup, undefined)
-
-  const [form, fields] = useForm({
-    id: 'signup-form',
-    lastResult,
-    onValidate({ formData }) {
-      return parseWithZod(formData, {
-        schema: (control) => createSignupSchema(control),
-      })
-    },
-    shouldValidate: 'onBlur',
-  })
+export default async function SignupPage() {
+  const { session } = await validateRequest()
+  if (session) return redirect('/dashboard')
 
   return (
     <>
-      <Link href="/" className="anchor-dark">
-        go home
-      </Link>
-      <form action={action} {...getFormProps(form)}>
-        <input
-          className={!fields.email.valid ? 'text-red-500' : ''}
-          {...getInputProps(fields.email, { type: 'email' })}
-          key={fields.email.key}
-        />
-        <div className="text-red-500">{fields.email.errors}</div>
-        <button type="submit">signup</button>
-      </form>
+      <SignupForm />
     </>
   )
 }

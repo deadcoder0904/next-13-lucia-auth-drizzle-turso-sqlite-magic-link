@@ -3,13 +3,13 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { generateId, TimeSpan } from 'lucia'
-import { and, eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { parseWithZod } from '@conform-to/zod'
 import { z } from 'zod'
 
 import { lucia } from '@/app/auth/lucia'
 import { db } from '@/app/db/index'
-import { sessionTable, userTable } from '@/app/db/drizzle.schema'
+import { userTable } from '@/app/db/drizzle.schema'
 import { createSignupSchema, loginSchema } from '@/app/lib/zod.schema'
 
 export async function signup(prevState: unknown, formData: FormData) {
@@ -62,7 +62,7 @@ export async function login(prevState: unknown, formData: FormData) {
         })
         return z.NEVER
       }
-      return { ...data, id: existingEmail[0].id }
+      return { ...data, userId: existingEmail[0].id }
     }),
     async: true,
   })
@@ -70,8 +70,9 @@ export async function login(prevState: unknown, formData: FormData) {
   if (submission.status !== 'success') {
     return submission.reply()
   }
+
   try {
-    const session = await lucia.createSession(submission.value.id, {})
+    const session = await lucia.createSession(submission.value.userId, {})
     const sessionCookie = lucia.createSessionCookie(session.id)
     cookies().set(
       sessionCookie.name,

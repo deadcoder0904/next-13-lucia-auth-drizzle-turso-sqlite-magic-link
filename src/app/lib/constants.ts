@@ -1,1 +1,1 @@
-export const key = 'registration_alert'
+export const VERIFIED_EMAIL_ALERT = 'VERIFIED_EMAIL_ALERT'

@@ -37,3 +37,6 @@ pnpm db:push
 ```bash
 pnpm db:generate
 ```
+
+1. signup -> create account with `email_verified=0` -> send verification email & log otp to console -> verify otp -> dashboard
+2. login -> if user exists (send verification email & log otp to console) else (throw invalid email error) -> verify otp (`email_verified=1`) -> dashboard

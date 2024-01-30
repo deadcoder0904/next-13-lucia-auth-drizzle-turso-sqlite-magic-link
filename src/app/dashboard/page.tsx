@@ -3,10 +3,13 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 
 import { lucia, validateRequest } from '@/app/auth/lucia'
+import { VERIFIED_EMAIL_ALERT } from '@/app/lib/constants'
+import { Toast } from '@/app/components/toast'
 
 const Dashboard = async () => {
-  const { session } = await validateRequest()
-  if (!session) return redirect('/login')
+  const { user } = await validateRequest()
+  console.log({ x: 'dashboard', user })
+  if (!user || !user.emailVerified) return redirect('/login')
 
   return (
     <>
@@ -16,6 +19,7 @@ const Dashboard = async () => {
       <form action={logout}>
         <button type="submit">logout</button>
       </form>
+      <Toast message="Email has been verifed!" />
     </>
   )
 }
@@ -39,6 +43,8 @@ async function logout() {
     sessionCookie.attributes
   )
   await lucia.deleteExpiredSessions()
+
+  cookies().delete(VERIFIED_EMAIL_ALERT)
 
   return redirect('/login')
 }

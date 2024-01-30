@@ -17,7 +17,7 @@ const cleanupDatabase = (db: BetterSQLite3Database<Record<string, never>>) => {
 const main = () => {
   console.log('🧨 Started deleting the database...\n')
   cleanupDatabase(db)
-  console.log('\n🧨 Done deleting the database successfully...')
+  console.log('\n🧨 Done deleting the database successfully...\n')
 }
 
 main()

@@ -1,17 +1,24 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "3bf4ae5c-0bac-4993-8365-24b36d28f25b",
+  "id": "10f4fa4d-e0a6-48d7-a869-2b1bd7618732",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "email_verification_token": {
-      "name": "email_verification_token",
+    "email_verification_code": {
+      "name": "email_verification_code",
       "columns": {
         "id": {
           "name": "id",
           "type": "text",
           "primaryKey": true,
           "notNull": true,
+          "autoincrement": false
+        },
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "user_id": {
@@ -21,8 +28,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "expires": {
-          "name": "expires",
+        "expires_at": {
+          "name": "expires_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -31,9 +38,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "email_verification_token_user_id_user_id_fk": {
-          "name": "email_verification_token_user_id_user_id_fk",
-          "tableFrom": "email_verification_token",
+        "email_verification_code_user_id_user_id_fk": {
+          "name": "email_verification_code_user_id_user_id_fk",
+          "tableFrom": "email_verification_code",
           "tableTo": "user",
           "columnsFrom": [
             "user_id"
@@ -93,8 +100,8 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
@@ -116,9 +123,24 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}

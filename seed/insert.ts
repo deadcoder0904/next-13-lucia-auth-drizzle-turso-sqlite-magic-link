@@ -10,14 +10,17 @@ const seedUsers = (db: BetterSQLite3Database<Record<string, never>>) => {
     {
       id: userIDs[0],
       email: 'a@a.com',
+      emailVerified: 1,
     },
     {
       id: userIDs[1],
       email: 'b@b.com',
+      emailVerified: 1,
     },
     {
       id: userIDs[2],
       email: 'c@c.com',
+      emailVerified: 1,
     },
   ]
 
@@ -36,7 +39,7 @@ const seedUsers = (db: BetterSQLite3Database<Record<string, never>>) => {
 const main = () => {
   console.log('🧨 Started seeding the database...\n')
   seedUsers(db)
-  console.log('\n🧨 Done seeding the database successfully...')
+  console.log('\n🧨 Done seeding the database successfully...\n')
 }
 
 main()

@@ -10,31 +10,24 @@ import { relations } from 'drizzle-orm'
 export const userTable = sqliteTable('user', {
   id: text('id').primaryKey(),
   email: text('email').unique().notNull(),
+  emailVerified: integer('email_verified').notNull(),
 })
 
 export const userTableRelations = relations(userTable, ({ many }) => ({
   session: many(sessionTable),
-  emailVerificationToken: many(emailVerificationTokenTable),
+  emailVerificationCode: many(emailVerificationCodeTable),
 }))
 
-export const sessionTable = sqliteTable(
-  'session',
-  {
-    id: text('id').primaryKey(),
-    userId: text('user_id')
-      .notNull()
-      .references(() => userTable.id, {
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-      }),
-    expiresAt: integer('expires_at').notNull(),
-  },
-  (session) => {
-    return {
-      userIdx: uniqueIndex('session_userId_idx').on(session.userId),
-    }
-  }
-)
+export const sessionTable = sqliteTable('session', {
+  id: text('id').primaryKey(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => userTable.id, {
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
+    }),
+  expiresAt: integer('expires_at').notNull(),
+})
 
 export const sessionTableRelations = relations(sessionTable, ({ one }) => ({
   user: one(userTable, {
@@ -43,22 +36,26 @@ export const sessionTableRelations = relations(sessionTable, ({ one }) => ({
   }),
 }))
 
-export const emailVerificationTokenTable = sqliteTable(
-  'email_verification_token',
+export const emailVerificationCodeTable = sqliteTable(
+  'email_verification_code',
   {
     id: text('id').primaryKey(),
+    code: text('code'),
     userId: text('user_id')
       .notNull()
-      .references(() => userTable.id),
-    expires: integer('expires'),
+      .references(() => userTable.id, {
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+      }),
+    expiresAt: integer('expires_at'),
   }
 )
 
-export const emailVerificationTokenTableRelations = relations(
-  emailVerificationTokenTable,
+export const emailVerificationCodeRelations = relations(
+  emailVerificationCodeTable,
   ({ one }) => ({
     user: one(userTable, {
-      fields: [emailVerificationTokenTable.userId],
+      fields: [emailVerificationCodeTable.userId],
       references: [userTable.id],
     }),
   })

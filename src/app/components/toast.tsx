@@ -3,18 +3,18 @@
 import React from 'react'
 import { useCookies } from 'next-client-cookies'
 
-import { key } from '@/app/lib/constants'
+import { VERIFIED_EMAIL_ALERT } from '@/app/lib/constants'
 
-export function Toast() {
+export function Toast({ message }: { message: string }) {
   const cookies = useCookies()
 
   React.useEffect(() => {
-    const toast = cookies.get(key)
+    const toast = cookies.get(VERIFIED_EMAIL_ALERT)
     if (toast) {
-      alert('Signup Successful!')
-      cookies.remove(key)
+      alert(message)
+      cookies.remove(VERIFIED_EMAIL_ALERT)
     }
-  }, [cookies])
+  }, [cookies, message])
 
   return null
 }

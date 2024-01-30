@@ -4,8 +4,9 @@ import { redirect } from 'next/navigation'
 import { validateRequest } from '@/app/auth/lucia'
 
 export default async function Home() {
-  const { session } = await validateRequest()
-  if (session) return redirect('/dashboard')
+  const { user } = await validateRequest()
+  console.log({ user })
+  if (user && user.emailVerified) return redirect('/dashboard')
 
   return (
     <main className="space-x-2">

@@ -1,17 +1,24 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "12d7e642-c893-4faf-a11d-609c73c3482d",
-  "prevId": "131bf06a-8c2d-4f2f-bc29-607e35ed23a5",
+  "id": "7d501736-93b6-421b-ba10-ab7ea3afee10",
+  "prevId": "0666f03e-2b03-4c74-bd75-a0bb7c293bf5",
   "tables": {
-    "email_verification_token": {
-      "name": "email_verification_token",
+    "email_verification_code": {
+      "name": "email_verification_code",
       "columns": {
         "id": {
           "name": "id",
           "type": "text",
           "primaryKey": true,
           "notNull": true,
+          "autoincrement": false
+        },
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "user_id": {
@@ -21,8 +28,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "expires": {
-          "name": "expires",
+        "expires_at": {
+          "name": "expires_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -31,9 +38,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "email_verification_token_user_id_user_id_fk": {
-          "name": "email_verification_token_user_id_user_id_fk",
-          "tableFrom": "email_verification_token",
+        "email_verification_code_user_id_user_id_fk": {
+          "name": "email_verification_code_user_id_user_id_fk",
+          "tableFrom": "email_verification_code",
           "tableTo": "user",
           "columnsFrom": [
             "user_id"
@@ -41,8 +48,8 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
@@ -73,15 +80,7 @@
           "autoincrement": false
         }
       },
-      "indexes": {
-        "session_userId_idx": {
-          "name": "session_userId_idx",
-          "columns": [
-            "user_id"
-          ],
-          "isUnique": true
-        }
-      },
+      "indexes": {},
       "foreignKeys": {
         "session_user_id_user_id_fk": {
           "name": "session_user_id_user_id_fk",
@@ -113,6 +112,13 @@
         "email": {
           "name": "email",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false

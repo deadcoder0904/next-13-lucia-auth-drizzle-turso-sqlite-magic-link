@@ -6,7 +6,7 @@ import { db } from '@/app/db/index'
 import { userTable, sessionTable } from '@/app/db/drizzle.schema'
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
 
-export const IS_DEV = process.env.NODE_ENV === 'development' ? 'DEV' : 'PROD'
+const IS_DEV = process.env.NODE_ENV === 'development' ? 'DEV' : 'PROD'
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable)
 
@@ -20,9 +20,8 @@ export const lucia = new Lucia(adapter, {
   },
   sessionExpiresIn: new TimeSpan(1, 'm'), // 1 month
   getUserAttributes: (attributes) => {
-    console.log({ attributes })
     return {
-      emailVerified: Boolean(attributes.email_verified),
+      emailVerified: attributes.emailVerified,
       email: attributes.email,
     }
   },
@@ -67,11 +66,9 @@ export const validateRequest = React.cache(uncachedValidateRequest)
 declare module 'lucia' {
   interface Register {
     Lucia: typeof lucia
-    DatabaseUserAttributes: DatabaseUserAttributes
-  }
-
-  interface DatabaseUserAttributes {
-    email: string
-    email_verified: number
+    DatabaseUserAttributes: {
+      email: string
+      emailVerified: number
+    }
   }
 }

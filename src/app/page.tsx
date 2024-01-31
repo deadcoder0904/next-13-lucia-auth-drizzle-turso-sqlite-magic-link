@@ -5,8 +5,8 @@ import { validateRequest } from '@/app/auth/lucia'
 
 export default async function Home() {
   const { user } = await validateRequest()
-  console.log({ user })
-  if (user && user.emailVerified) return redirect('/dashboard')
+  const userExists = user && user.emailVerified
+  if (userExists) return redirect('/dashboard')
 
   return (
     <main className="space-x-2">

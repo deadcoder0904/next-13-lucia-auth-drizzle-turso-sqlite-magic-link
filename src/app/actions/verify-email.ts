@@ -7,41 +7,25 @@ import { parseWithZod } from '@conform-to/zod'
 import { z } from 'zod'
 import { isWithinExpirationDate, TimeSpan } from 'oslo'
 
-import { lucia, validateRequest } from '@/app/auth/lucia'
+import { lucia } from '@/app/auth/lucia'
 import { db } from '@/app/db/index'
 import { emailVerificationCodeTable, userTable } from '@/app/db/drizzle.schema'
 import { verifyEmailSchema } from '@/app/lib/zod.schema'
 import { VERIFIED_EMAIL_ALERT } from '@/app/lib/constants'
 
 export async function verifyEmail(prevState: unknown, formData: FormData) {
-  const { user } = await validateRequest()
-  console.log({ user })
-  if (!user) {
-    return redirect('/login')
-  }
-
-  const code = formData.get('code')
-
   const submission = await parseWithZod(formData, {
     schema: verifyEmailSchema.transform(async (data, ctx) => {
-      const databaseCode = await db.transaction(async (tx) => {
-        const code = await tx
-          .select()
-          .from(emailVerificationCodeTable)
-          .where(eq(emailVerificationCodeTable.userId, user.id))
-          .execute()
-          .then((s) => s[0])
-        console.log({ code })
-        if (code) {
-          await tx
-            .delete(emailVerificationCodeTable)
-            .where(eq(emailVerificationCodeTable.id, code.id))
-        }
-        return code
-      })
+      const { code } = data
 
-      console.log({ databaseCode })
-      if (!databaseCode || databaseCode.code !== code) {
+      const databaseCode = await db
+        .select()
+        .from(emailVerificationCodeTable)
+        .where(eq(emailVerificationCodeTable.code, code))
+        .execute()
+        .then((s) => s[0])
+
+      if (!databaseCode) {
         ctx.addIssue({
           path: ['code'],
           code: z.ZodIssueCode.custom,
@@ -62,7 +46,11 @@ export async function verifyEmail(prevState: unknown, formData: FormData) {
         return z.NEVER
       }
 
-      return { ...data, databaseCode }
+      await db
+        .delete(emailVerificationCodeTable)
+        .where(eq(emailVerificationCodeTable.id, databaseCode.id))
+
+      return { ...data, ...databaseCode }
     }),
     async: true,
   })
@@ -71,18 +59,27 @@ export async function verifyEmail(prevState: unknown, formData: FormData) {
     return submission.reply()
   }
 
+  const user = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.id, submission.value.userId))
+    .execute()
+    .then((s) => s[0])
+
   await lucia.invalidateUserSessions(user.id)
   await db
     .update(userTable)
     .set({ emailVerified: 1 })
     .where(eq(userTable.id, user.id))
 
+  console.log(`\n😊 ${user.email} has been verified.\n`)
+
   const session = await lucia.createSession(user.id, {})
   const sessionCookie = lucia.createSessionCookie(session.id)
   cookies().set(sessionCookie)
 
   cookies().set(VERIFIED_EMAIL_ALERT, 'true', {
-    maxAge: new TimeSpan(10, 'm').seconds(), // 10 minutes = 60 * 60 * 1
+    maxAge: new TimeSpan(1, 'm').seconds(), // 10 minutes = 60 * 60 * 1
   })
 
   return redirect('/dashboard')

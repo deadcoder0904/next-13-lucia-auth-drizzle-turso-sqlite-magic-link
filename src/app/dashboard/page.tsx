@@ -8,8 +8,8 @@ import { Toast } from '@/app/components/toast'
 
 const Dashboard = async () => {
   const { user } = await validateRequest()
-  console.log({ x: 'dashboard', user })
-  if (!user || !user.emailVerified) return redirect('/login')
+  const userExists = user && user.emailVerified
+  if (!userExists) return redirect('/login')
 
   return (
     <>

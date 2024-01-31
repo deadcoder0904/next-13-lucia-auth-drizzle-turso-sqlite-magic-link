@@ -5,7 +5,8 @@ import { validateRequest } from '@/app/auth/lucia'
 
 export default async function SignupPage() {
   const { user } = await validateRequest()
-  if (user && user.emailVerified) return redirect('/dashboard')
+  const userExists = user && user.emailVerified
+  if (userExists) return redirect('/dashboard')
 
   return (
     <>

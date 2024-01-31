@@ -14,13 +14,11 @@ export async function generateEmailVerificationCode(
     .where(eq(emailVerificationCodeTable.userId, userId))
 
   const code = generateRandomString(6, alphabet('0-9', 'A-Z'))
-  const id = generateId(15)
 
   await db.insert(emailVerificationCodeTable).values({
-    id,
-    userId,
     code,
     expiresAt: createDate(new TimeSpan(1, 'm')).getTime(), // 5 minutes
+    userId,
   })
 
   return code

@@ -2,10 +2,10 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { generateId } from 'lucia'
 import { eq } from 'drizzle-orm'
 import { parseWithZod } from '@conform-to/zod'
 import { TimeSpan } from 'oslo'
+import { ulid } from 'ulidx'
 
 import { lucia } from '@/app/auth/lucia'
 import { db } from '@/app/db/index'
@@ -20,7 +20,7 @@ export async function sendEmailVerificationCode(userId: string, email: string) {
 }
 
 export async function signup(prevState: unknown, formData: FormData) {
-  const userId = generateId(15)
+  const userId = ulid()
   const submission = await parseWithZod(formData, {
     schema: (control) =>
       // create a zod schema base on the control
@@ -34,14 +34,13 @@ export async function signup(prevState: unknown, formData: FormData) {
           return !user.length
         },
       }).transform(async (data, ctx) => {
-        const session = await db
+        const user = await db
           .insert(userTable)
           .values({ id: userId, emailVerified: 0, ...data })
           .returning()
           .then((s) => s[0])
-        console.log('signup ation')
-        console.log({ ...data, ...session })
-        return { ...data, ...session }
+
+        return { ...data, ...user }
       }),
     async: true,
   })
@@ -51,14 +50,10 @@ export async function signup(prevState: unknown, formData: FormData) {
   }
 
   try {
-    const session = await lucia.createSession(userId, {})
-    const sessionCookie = lucia.createSessionCookie(session.id)
-    cookies().set(sessionCookie)
-
     sendEmailVerificationCode(userId, submission.value.email)
 
     cookies().set(VERIFIED_EMAIL_ALERT, 'true', {
-      maxAge: new TimeSpan(10, 'm').seconds(), // 10 minutes = 60 * 60 * 1
+      maxAge: new TimeSpan(1, 'm').seconds(), // 10 minutes = 60 * 60 * 1
     })
   } catch (err) {
     console.error(`Signup error while creating Lucia session:`)

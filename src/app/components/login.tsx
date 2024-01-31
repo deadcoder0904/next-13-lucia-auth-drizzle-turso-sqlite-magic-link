@@ -8,6 +8,7 @@ import { parseWithZod } from '@conform-to/zod'
 
 import { login } from '@/app/actions/login'
 import { loginSchema } from '@/app/lib/zod.schema'
+import { Toast } from '@/app/components/toast'
 
 export function LoginForm() {
   const [lastResult, action] = useFormState(login, undefined)
@@ -39,6 +40,7 @@ export function LoginForm() {
           login
         </button>
       </form>
+      <Toast message="Email Verification Successful!" />
     </>
   )
 }

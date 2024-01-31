@@ -8,7 +8,8 @@ import { VERIFIED_EMAIL_ALERT } from '@/app/lib/constants'
 export default async function Login() {
   // const cookieAlert = cookies().get(VERIFIED_EMAIL_ALERT)
   const { user } = await validateRequest()
-  if (user && user.emailVerified) return redirect('/dashboard')
+  const userExists = user && user.emailVerified
+  if (userExists) return redirect('/dashboard')
 
   return (
     <>
